@@ -1,0 +1,26 @@
+<!-- form-profile-image.html -->
+<form id="profileimage" name="imageform" >
+   <p> Welcome <strong>{{ formData.name }}</strong>.</p>
+   <p>Please uplaod your profile picture.</p>
+   <hr/>
+<div class="form-group">
+     <label for="file">Upload your progile picture</label>
+      <input type="file" id="file" ngf-select ng-model="picFile" name="file"
+             accept="image/*" ngf-max-size="2MB" required
+             ngf-model-invalid="errorFile">
+      <i ng-show="imageform.file.$error.required">*required</i><br>
+      <i ng-show="imageform.file.$error.maxSize">File too large 
+          {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+      <img ng-show="imageform.file.$valid" ngf-thumbnail="picFile" class="thumb"> <button ng-click="picFile = null" ng-show="picFile"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+      <br>
+      <input type="hidden" name="userid" value="{{ formData.user_id }}" />
+      <button ng-disabled="!imageform.$valid" 
+              ng-click="uploadPic(picFile)" class="btn btn-default upload">Submit</button>
+      <span class="progress" ng-show="picFile.progress >= 0">
+        <div style="width:{{picFile.progress}}%" 
+            ng-bind="picFile.progress + '%'"></div>
+      </span>
+      <span ng-show="picFile.result">Upload Successful</span>
+      <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+ </div>
+</form>
